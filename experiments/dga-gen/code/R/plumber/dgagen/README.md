@@ -5,16 +5,17 @@ A service for generating pseudo-random domains using a CNN using Tensorflow R AP
 ## INSTALL:
 
 Since installing *Tensorflow* and *Keras* could be difficult the best approach is to use a provided docker image
-available [here](https://hub.docker.com/repository/docker/harpomaxx/dgagen"
+available [here](https://hub.docker.com/repository/docker/harpomaxx/dgagen)
 
-### USE DOCKER
+### TRYING DOCKER
 
 ```
 docker run -p8001:8001 harpomaxx/dgagen:cnnv1
-```	 	 	 
-### USE STANDALONE
+```	 
+	 	 
+### TRYING STANDALONE
 
-Install dependencies
+#### Install dependencies
 
 ```
 R -e "install.package(
@@ -30,23 +31,23 @@ R -e "install.package(
 
 ```
 
-Execute the service
+#### Execute the service
 
 ```
 Rscript  ./launchservice.R
 ```
 
 
-## EXAMPLE
+## QUERING THE SERVICE
 
 
-Use curl to test the service
+#### Use curl to test the service
 
 ```
  curl "http://localhost:8001/generate?n=10&seed=2&tld=.com"
 ```
 
-You should receive an answer similar to this one
+#### You should receive an answer similar to this one
 
 ```
 {"version":"aidojo-dgagen-cnnv1",
