@@ -155,8 +155,13 @@ build_dataset_one_hot <- function(data, labels, maxlen) {
 }
 
 
-#'  Helper function for generating next char usin some biased distribution
-#'
+#' Helper function for generating next char Temperature Scaling.
+#' An approach similar to Platt's scaling.
+#' Softmax outputs tend to produce overconfident probabilities.
+#' Using this function the model will basically be less confident 
+#' about it's prediction. 
+#' more info h
+#' https://stackoverflow.com/questions/58764619/why-should-we-use-temperature-in-softmax
 #' @param preds 
 #' @param chars 
 #' @param temperature 
