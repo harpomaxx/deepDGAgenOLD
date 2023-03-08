@@ -57,7 +57,7 @@ dim (seq_x)
 ```
 
 
-# LSTM sequence Autoencoder
+# AUTO ENCODER
 
 ```{r eval=FALSE, include=FALSE}
 
@@ -154,10 +154,10 @@ encoded_seq_x_mean[,1] %>% as.data.frame() %>%
 ```
 
 
-# VAE
+# VARIATIONAL AUTO ENCODER
 
 ### Encoder
-##### CNN
+##### CNN (not used)
 ```{r eval=FALSE, include=FALSE}
 
 latent_dim <- 2
@@ -215,7 +215,7 @@ layer_sampler <- new_layer_class(
 
 
 ### Decoder
-#### CNN
+#### CNN (not used)
 
 ```{r eval=FALSE, include=FALSE}
 latent_inputs <- layer_input(shape = c(latent_dim))
@@ -249,7 +249,7 @@ vae_decoder
 ```
 
 
-### Model
+### VAE Custon Model
 ```{r}
 model_vae <- new_model_class(
   classname = "VAE",
@@ -341,11 +341,12 @@ dim(vectorized_test)
 
 
 # Training
+
+
 ```{r}
 optimizer <- optimizer_adam(learning_rate = 0.005)
 vae <- model_vae(vae_encoder, vae_decoder)
 vae %>% compile(optimizer = optimizer)
-
 ```
 
 
@@ -357,7 +358,7 @@ my_callbacks <- list(
 )
 ## -------------------------------------------------------------------------
 #vae %>% fit(mnist_digits, epochs = 30, batch_size = 128)
-vae %>% fit(seq_x,epochs = 5,
+vae %>% fit(seq_x,epochs = 3,
                 batch_size = 512
             
             )
@@ -369,8 +370,8 @@ vae %>% fit(seq_x,epochs = 5,
 ```{r}
 #vae$save("/tmp/keras-model")
 #save_model_tf(vae,model_path)
-#save_model_weights_tf(vae, "models/dgagen_vae__weights")
-#load_model_weights_tf(vae, "models/dgagen_vae__weights")
+save_model_weights_tf(vae, "models/vae_64_weights")
+#load_model_weights_tf(vae, "models/dgagen_vae_weights")
 ```
 
 #Testing
@@ -379,7 +380,7 @@ We pick a domain, encode it and decode it.
 
 ```{r}
 # Pick domain
-d<-domains[162100]
+d<-domains[222222]
 print(paste("domain: ",d))
 
 # Preprocess
@@ -406,7 +407,7 @@ enc<-substr(enc, start = 1,stop =nchar(d) )
 print(paste("decoded domains:", enc))
 ```
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 encoded_mean<-encoded_seq_x_vae_mean %>% apply(.,MARGIN = 2, mean)
 encoded_sd<-encoded_seq_x_vae_mean %>% apply(.,MARGIN = 2, sd)
 
@@ -431,7 +432,7 @@ for (j in 1:length(d)){
   print(d[j])
   for (k in 1:10){
  
-    eps<-rnorm(latent_dim,mean = 0,sd = 0.01)
+    eps<-rnorm(latent_dim,mean = 0,sd = 0.2)
     z <- tf$add(eps,preds_encoder[[1]])
     #z <- list(eps) %>% as_tensor()
     decoded <- predict(vae$decoder, z, verbose = 0 )

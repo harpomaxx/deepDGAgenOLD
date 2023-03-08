@@ -59,7 +59,7 @@ enc
 dim (seq_x)
 ```
  
-## Sequence Autoencoder 
+## Sequence Autoencoder (not used)
 ```{r eval=FALSE, include=FALSE}
 # This is the size of our encoded representations
 encoding_dim <- c(10, 8)
@@ -142,7 +142,6 @@ auto_encoder
 auto_decoder
 ```
 
-
 ```{r}
 
 autoencoder_input <- layer_input(shape = input_size,name="ae_input")
@@ -154,6 +153,7 @@ optimizer <- optimizer_adam(learning_rate = 0.005)
 autoencoder %>% compile(optimizer= optimizer, loss='mse')
 autoencoder
 ```
+#Training
  
 ```{r}
 autoencoder %>% fit(seq_x, seq_x,
@@ -223,6 +223,7 @@ for (i in 1:dimen[2]  ){
 print(substr(enc, start = 1,stop =nchar(d) ) )
 
 ```
+
 ```{r}
 library(ggplot2)
 encoded_seq_x <-predict(auto_encoder, seq_x)
